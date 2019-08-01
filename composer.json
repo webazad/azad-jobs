@@ -1,0 +1,17 @@
+{
+    "name": "azad/alecaddd-plugin",
+    "description": "Azad",
+    "type": "dev",
+    "license": "GPLv2 or later",
+    "authors": [
+        {
+            "name": "Azad",
+            "email": "webdevazad@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload":{
+        "psr-4":{"Inc\\":"./inc"}
+    }
+}

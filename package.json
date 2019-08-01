@@ -1,0 +1,25 @@
+{
+  "name": "azad",
+  "version": "1.0.0",
+  "description": "Styles",
+  "main": "index.js",
+  "scripts": {
+    "test": "azad"
+  },
+  "keywords": [
+    "azad"
+  ],
+  "author": "Md. Abul Kalam Azad",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^4.0.2"
+  },
+  "dependencies": {
+    "browser-sync": "^2.26.7",
+    "gulp-concat": "^2.6.1",
+    "gulp-rename": "^1.4.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.5",
+    "yarn": "^1.16.0"
+  }
+}
