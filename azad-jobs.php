@@ -17,9 +17,9 @@ if(file_exists(dirname(__FILE__) . '/vendor/autoload.php')){
     //require_once (dirname(__FILE__) . '/vendor/autoload.php');
 }
 //use Inc\Activate;
-require_once (plugin_dir_path(__FILE__) . '/wp-job-fields.php');
-require_once (plugin_dir_path(__FILE__) . '/wp-job-cpt.php');
-require_once (plugin_dir_path(__FILE__) . '/wp-job-render-admin.php');
+require_once (plugin_dir_path(__FILE__) . '/azad-jobs-fields.php');
+require_once (plugin_dir_path(__FILE__) . '/azad-jobs-post.php');
+require_once (plugin_dir_path(__FILE__) . '/azad-jobs-admin.php');
 
 function dwwp_enqueue_scripts(){	
     global $pagenow, $typenow;

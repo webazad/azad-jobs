@@ -1,8 +1,4 @@
 <?php
-/* 
-
-*/ 
-
 // EXIT IF ACCESSED DIRECTLY
 function dwwp_custom_meta_box(){
     add_meta_box(
