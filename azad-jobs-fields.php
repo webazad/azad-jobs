@@ -1,5 +1,4 @@
 <?php
-// EXIT IF ACCESSED DIRECTLY
 function dwwp_custom_meta_box(){
     add_meta_box(
         'dwwp_meta',
@@ -10,7 +9,6 @@ function dwwp_custom_meta_box(){
         'core'
     );
 }
-// THIS CAN BE WRITTEN IN add_action('after_setup_theme','text_domain_name');
 add_action('add_meta_boxes','dwwp_custom_meta_box'); 
 
 function dwwp_meta_callback($post){

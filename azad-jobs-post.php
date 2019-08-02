@@ -1,36 +1,29 @@
 <?php
-/* 
+// :: STATIC CUSTOM POST
+function azad_custom_post(){
+    $singular = apply_filters('custom_post_name','job');
+    $plural = $singular.'s';
+    $domain = 'azad-jobs';
 
-*/ 
-
-// EXIT IF ACCESSED DIRECTLY
-/**
-*----------------------------------------------------------------------------------------------------------------------
-* :: STATIC CUSTOM POST
-*----------------------------------------------------------------------------------------------------------------------
-*/
-function dwwp_custom_post(){
-    // POST TYPES FOR BOOKS (YOU CAN COPY THIS AS MUCH AS YOU NEED)
-    $singular = apply_filters('custom_post','book');
     $labels = array(
-        'name'               => _x( 'Books', 'post type general name', 'quick_start_dev_pack' ),
-        'singular_name'      => _x( 'Book', 'post type singular name', 'quick_start_dev_pack' ),
-        'menu_name'          => _x( 'Books', 'admin menu', 'quick_start_dev_pack' ),
-        'name_admin_bar'     => _x( 'Book', 'add new on admin bar', 'your-plugin-textdomain' ),
-        'add_new'            => _x( 'Add New', 'book', 'your-plugin-textdomain' ),
-        'add_new_item'       => __( 'Add New Book', 'your-plugin-textdomain' ),
-        'new_item'           => __( 'New Book', 'your-plugin-textdomain' ),
-        'edit_item'          => __( 'Edit Book', 'your-plugin-textdomain' ),
-        'view_item'          => __( 'View Book', 'your-plugin-textdomain' ),
-        'all_items'          => __( 'All Books', 'your-plugin-textdomain' ),
-        'search_items'       => __( 'Search Books', 'your-plugin-textdomain' ),
-        'parent_item_colon'  => __( 'Parent Books:', 'your-plugin-textdomain' ),
-        'not_found'          => __( 'No books found.', 'your-plugin-textdomain' ),
-        'not_found_in_trash' => __( 'No books found in Trash.', 'your-plugin-textdomain' )
+        'name'               => _x( ucwords($plural), 'post type general name', $domain ),
+        'singular_name'      => _x( 'Book', 'post type singular name', $domain ),
+        'menu_name'          => _x( 'Jobs', 'admin menu', $domain ),
+        'name_admin_bar'     => _x( ucwords($singular), 'add new on admin bar', $domain ),
+        'add_new'            => _x( 'Add New', $singular, $domain ),
+        'add_new_item'       => __( 'Add New Job', $domain ),
+        'new_item'           => __( 'New Book', $domain ),
+        'edit_item'          => __( 'Edit Book', $domain ),
+        'view_item'          => __( 'View Book', $domain ),
+        'all_items'          => __( 'All Jobs', $domain ),
+        'search_items'       => __( 'Search Books', $domain ),
+        'parent_item_colon'  => __( 'Parent Books:', $domain ),
+        'not_found'          => __( 'No books found.', $domain ),
+        'not_found_in_trash' => __( 'No books found in Trash.', $domain )
     );
     $args = array(
         'labels'                => $labels,
-        'description'		=> __( 'Description.', 'your-plugin-textdomain' ),
+        'description'		=> __( 'Description.', $domain ),
         'public'             	=> true,
         'publicly_queryable' 	=> true,
         'show_ui'            	=> true,
@@ -49,10 +42,8 @@ function dwwp_custom_post(){
         'menu_icon'      		=> 'dashicons-lock',
         'supports'           	=> array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments', 'trackbacks', 'custom-fields', 'revisions', 'page-attributes', 'post-formats' ),
 		//'has_archive'    	=> 'archive-name',
-		'taxonomies'    	=> array('category','post_tag'),
-		
+		'taxonomies'    	=> array('category','post_tag')		
     );
-    register_post_type('job',$args);
+    register_post_type($singular,$args);
 }
-// THIS CAN BE WRITTEN IN add_action('after_setup_theme','text_domain_name');
-add_action('init','dwwp_custom_post'); 
+add_action('init','azad_custom_post'); 
