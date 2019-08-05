@@ -1,37 +1,29 @@
 const gulp = require('gulp'),
-      //rename = require('gulp-rename');
+      rename = require('gulp-rename');
       sass = require('gulp-sass'),
-      //concat = require('gulp-concat'),
-      sourcemaps = require('gulp-sourcemaps'),
-      browserSync = require('browser-sync').create();
+      uglify = require('gulp-uglify'),
+      sourcemaps = require('gulp-sourcemaps')
 
 const styleSrc = './assets/sass/**/*.scss',
       styleDist = './assets/';
 
 gulp.task('style',()=>{
-    //sconsole.log('Are you looking for something');
+    //console.log('Are you looking for something');
     return gulp.src(styleSrc)
         .pipe(sourcemaps.init())
         .pipe(sass({
             'outputStyle':'expanded'
         }).on('error',sass.logError))
-        //.pipe(concat('style.css'))
-        //.pipe(rename({suffix:'.min'}))
         .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest(styleDist))
-        .pipe(browserSync.stream({
-            reload:true
-        }));
+        .pipe(rename({suffix:'.min'}))
+        .pipe(gulp.dest(styleDist));
 });
 
-gulp.task('server',()=>{
-    browserSync.init({
-        server:'./',
-        open:false
-    });
-    //gulp.watch(styleSrc,['style']);
+gulp.task('js',()=>{
+    return gulp.src('./assets/sass/**/*.js')
+    .pipe(gulp.dest('./assets'))
+    .pipe(uglify())
+    .pipe(rename({suffix:'.min'}))
+    .pipe(gulp.dest('./assets'));
 });
-
-// gulp.task('watch',['serve'],()=>{
-//     gulp.watch(styleSrc,['style']);
-// });

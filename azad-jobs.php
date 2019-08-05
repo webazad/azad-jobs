@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
 Plugin Name: Azad Jobs
 Description: Description will go here...
 Plugin URi: gittechs.com/plugin/azad-custom-login 
@@ -25,7 +25,7 @@ function dwwp_enqueue_scripts(){
     //$screen = get_current_screen();
     //var_dump($screen);
     if($typenow == 'job'){
-        wp_register_style('azad-jobs', plugins_url('assets/css/jobs.css',__FILE__), null, '123', 'all');
+        wp_register_style('azad-jobs', plugins_url('assets/css/jobs.min.css',__FILE__), null, '123', 'all');
         wp_enqueue_style('azad-jobs');
     }
     if($pagenow == 'post.php' || $pagenow == 'post-new.php' && $typenow == 'job'){        
@@ -73,7 +73,7 @@ function reorder_jobs_callback(){
                     <img src="<?php echo esc_url(admin_url()) . 'images/loading.gif'; ?>" id="loading-animation">
                 </h1>
                 <p><?php _e('<strong>Note:</strong> This only affects teh You can write any there iadfasd asdfas ','asdf'); ?></p>
-                <ul classs="custom-type-list">
+                <ul id="custom-type-list">
                     <?php if($jobs->have_posts()) : while($jobs->have_posts()) : $jobs->the_post(); ?>
                         <li id="<?php the_id(); ?>"><?php the_title(); ?></li>
                     <?php endwhile; else: _e('You have no jobs to sort.','asdf'); endif; ?>
