@@ -39,7 +39,7 @@ function dwwp_enqueue_scripts(){
         wp_enqueue_script('dwwp-custom-quicktags');
     }
     if($pagenow == 'edit.php' && $typenow == 'job'){
-        wp_register_script('azad-reorder', plugins_url('assets/js/reorder.js',__FILE__), array('jquery','jquery-ui-sortable'), '123', true );
+        wp_register_script('azad-reorder', plugins_url('assets/js/reorder.min.js',__FILE__), array('jquery','jquery-ui-sortable'), '123', true );
         wp_enqueue_script('azad-reorder');
     }
 }
@@ -82,3 +82,6 @@ function reorder_jobs_callback(){
         </div>
     <?php
 }
+function dwwp_save_reorder(){
+}
+add_action('wp_ajax_save_sort','dwwp_save_reorder');
