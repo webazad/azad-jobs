@@ -41,10 +41,16 @@ function dwwp_enqueue_scripts(){
     if($pagenow == 'edit.php' && $typenow == 'job'){
         wp_register_script('azad-reorder', plugins_url('assets/js/reorder.min.js',__FILE__), array('jquery','jquery-ui-sortable'), '123', true );
         wp_enqueue_script('azad-reorder');
+        wp_localize_script('azad-reorder','AZAD_JOBS',array(
+            'url'       => admin_url('admin-ajax.php'),
+            'security'  => wp_create_nonce('azad-job-order'),
+            'success'   => 'Jobs order has been saved.',
+            'failure'   => 'There was an error saving the sort order. Or you do not have proper permisions.'
+        ));
     }
 }
 add_action('admin_enqueue_scripts','dwwp_enqueue_scripts');
-function dwwp_add_submenu_page(){	
+function azad_jobs_add_submenu_page(){	
     add_submenu_page(
         'edit.php?post_type=job',
         'Reorder Jobs',
@@ -54,7 +60,7 @@ function dwwp_add_submenu_page(){
         'reorder_jobs_callback',
     );
 }
-add_action('admin_menu','dwwp_add_submenu_page');
+add_action('admin_menu','azad_jobs_add_submenu_page');
 function reorder_jobs_callback(){
     $args = array(
         'post_type' => 'job',
@@ -82,6 +88,24 @@ function reorder_jobs_callback(){
         </div>
     <?php
 }
-function dwwp_save_reorder(){
+function azad_save_reorder(){
+    if( ! check_ajax_referer('azad-job-order','security') ){
+        return wp_send_json_error('Invalid None ehhh!!!');
+    }
+    if(! current_user_can('manage_options')){
+        return wp_send_json_error('You do not have enough permision to do it folks.');
+    }
+    $order = $_POST['order'];
+    $counter = 0;
+    foreach($order as $item_id){
+        $post = array(
+            'ID' => (int)$item_id,
+            'menu_order' => $counter
+        );
+        wp_update_post($post);
+        $counter++;
+    }
+    wp_send_json_success('Post svaed.');
+    //update_option('azad',$order);
 }
-add_action('wp_ajax_save_sort','dwwp_save_reorder');
+add_action('wp_ajax_save_sort','azad_save_reorder');
