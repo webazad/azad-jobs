@@ -19,6 +19,7 @@ if(file_exists(dirname(__FILE__) . '/vendor/autoload.php')){
 require_once (plugin_dir_path(__FILE__) . '/azad-jobs-fields.php');
 require_once (plugin_dir_path(__FILE__) . '/azad-jobs-post.php');
 require_once (plugin_dir_path(__FILE__) . '/azad-jobs-admin.php');
+require_once (plugin_dir_path(__FILE__) . '/azad-jobs-shortcode.php');
 
 function dwwp_enqueue_scripts(){	
     global $pagenow, $typenow;
