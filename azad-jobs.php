@@ -1,23 +1,33 @@
 <?php
 /*
-Plugin Name: Azad Jobs
-Description: Description will go here...
-Plugin URi: gittechs.com/plugin/azad-custom-login 
-Author: Md. Abul Kalam Azad
-Author URI: gittechs.com/author
+ Plugin Name: Azad Jobs
+ Description: Description will go here...
+  Plugin URi: gittechs.com/plugin/azad-custom-login 
+      Author: Md. Abul Kalam Azad
+  Author URI: gittechs.com/author
 Author Email: webdevazad@gmail.com
-Version: 0.0.0.1
-Text Domain: azad-jobs
+     Version: 0.0.0.1
+ Text Domain: azad-jobs
 */ 
 // EXIT IF ACCESSED DIRECTLY
 defined('ABSPATH') || exit;
+
+require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+$plugin_data = get_plugin_data( __FILE__ );
+
+define( 'AZAD_JOBS_NAME', $plugin_data['Name'] );
+define( 'AZAD_JOBS_VERSION', $plugin_data['Version'] );
+define( 'AZAD_JOBS_TEXTDOMAIN', $plugin_data['TextDomain'] );
+define( 'AZAD_JOBS_PATH', plugin_dir_path( __FILE__ ) );
+define( 'AZAD_JOBS_URL', plugin_dir_url( __FILE__ ) );
+define( 'AZAD_JOBS_BASENAME', plugin_basename( __FILE__ ) );
 
 if(file_exists(dirname(__FILE__) . '/vendor/autoload.php')){
     //require_once (dirname(__FILE__) . '/vendor/autoload.php');
 }
 //use Inc\Activate;
-require_once (plugin_dir_path(__FILE__) . '/azad-jobs-fields.php');
 require_once (plugin_dir_path(__FILE__) . '/azad-jobs-post.php');
+require_once (plugin_dir_path(__FILE__) . '/azad-jobs-fields.php');
 require_once (plugin_dir_path(__FILE__) . '/azad-jobs-admin.php');
 require_once (plugin_dir_path(__FILE__) . '/azad-jobs-shortcode.php');
 
@@ -64,26 +74,27 @@ function azad_jobs_add_submenu_page(){
 add_action('admin_menu','azad_jobs_add_submenu_page');
 function reorder_jobs_callback(){
     $args = array(
-        'post_type' => 'job',
-        'orderby' => 'menu_order',
-        'order' => 'ASC',
-        'no_found_rows' => true,
-        'update_post_term_cache' => false,
-        'post_per_page' => 50
+        'post_type'                 => 'job',
+        'orderby'                   => 'menu_order',
+        'order'                     => 'ASC',
+        'no_found_rows'             => true,
+        'update_post_term_cache'    => false,
+        'post_per_page'             => 50
     );
     $jobs = new WP_Query($args);
     ?>
     <div class="wrap">    
         <div id="wrap" class="job-sort">
             <div id="icon-job-admin" class="icon32"><br /></div>
-                <h1><?php echo esc_html(get_admin_page_title()); ?>
+                <h1>
+                    <?php echo esc_html(get_admin_page_title()); ?>
                     <img src="<?php echo esc_url(admin_url()) . 'images/loading.gif'; ?>" id="loading-animation">
                 </h1>
-                <p><?php _e('<strong>Note:</strong> This only affects teh You can write any there iadfasd asdfas ','asdf'); ?></p>
+                <p><?php _e('<strong>Note:</strong><em> This are the jobs order that you can order with the help of drag and drop.',AZAD_JOBS_TEXTDOMAIN); ?></em></p>
                 <ul id="custom-type-list">
                     <?php if($jobs->have_posts()) : while($jobs->have_posts()) : $jobs->the_post(); ?>
                         <li id="<?php the_id(); ?>"><?php the_title(); ?></li>
-                    <?php endwhile; else: _e('You have no jobs to sort.','asdf'); endif; ?>
+                    <?php endwhile; else: _e('You have no jobs to sort for now. You need to post jobs to show here.',AZAD_JOBS_TEXTDOMAIN); endif; ?>
                 </ul>
             </div>
         </div>
@@ -106,7 +117,7 @@ function azad_save_reorder(){
         wp_update_post($post);
         $counter++;
     }
-    wp_send_json_success('Post svaed.');
+    wp_send_json_success('Post saved.');
     //update_option('azad',$order);
 }
 add_action('wp_ajax_save_sort','azad_save_reorder');
